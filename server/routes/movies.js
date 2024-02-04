@@ -25,4 +25,15 @@ router.get("/", async (req, res) => {
   res.json(movies);
 });
 
+router.post("/", async (req, res) => {
+  const { Title, Rating } = req.body;
+  const movie = await prisma.movies.create({
+    data: {
+      Title,
+      Rating,
+    },
+  });
+  res.json(movie);
+});
+
 export default router;
