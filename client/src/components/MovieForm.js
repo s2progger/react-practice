@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { API } from "../services/api";
-
 export default function MovieForm({ submitHandler, movieRef }) {
   const handleInputChange = (e) => {
     movieRef[e.target.id] = e.target.value;
