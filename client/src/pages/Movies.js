@@ -1,9 +1,11 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { API } from "../services/api";
+import MovieForm from "../components/MovieForm";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [dependencies, setDependencies] = useState(0);
+  const newMovie = useRef({ Title: "", Rating: "" });
 
   // useMemo allows us to cache the movie list between re-renders
   const fetchMovies = useMemo(
@@ -29,12 +31,9 @@ export default function Movies() {
   const addMovie = (e) => {
     e.preventDefault();
 
-    const title = document.getElementById("new-title").value;
-    const rating = document.getElementById("new-rating").value;
+    console.log("Adding movie...", newMovie);
 
-    console.log("Adding movie...", title, rating);
-
-    API.post("/movies", { title, rating }).then(() => {
+    API.post("/movies", newMovie).then(() => {
       setDependencies(dependencies + 1);
     });
   };
@@ -54,12 +53,7 @@ export default function Movies() {
         ))}
       </ul>
 
-      <form onSubmit={addMovie}>
-        <h2>Add a movie</h2>
-        <input type="text" id="new-title" placeholder="Title" />{" "}
-        <input type="text" id="new-rating" placeholder="Rating" />{" "}
-        <button type="submit">Add</button>
-      </form>
+      <MovieForm submitHandler={addMovie} movieRef={newMovie} />
     </div>
   );
 }
