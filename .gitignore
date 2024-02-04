@@ -1,3 +1,6 @@
 .DS_Store
 node_modules
 .env
+
+# We probably shouldn't commit the sqlite database, but we definately don't want the journal file
+*.sqlite-journal

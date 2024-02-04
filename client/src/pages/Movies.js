@@ -5,7 +5,7 @@ import MovieForm from "../components/MovieForm";
 export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [dependencies, setDependencies] = useState(0);
-  const newMovie = useRef({ Title: "", Rating: "" });
+  const [newMovie, setNewMovie] = useState({ Title: "", Rating: "" });
 
   // useMemo allows us to cache the movie list between re-renders
   const fetchMovies = useMemo(
@@ -34,6 +34,7 @@ export default function Movies() {
     console.log("Adding movie...", newMovie);
 
     API.post("/movies", newMovie).then(() => {
+      setNewMovie({ Title: "", Rating: "" });
       setDependencies(dependencies + 1);
     });
   };
@@ -53,7 +54,11 @@ export default function Movies() {
         ))}
       </ul>
 
-      <MovieForm submitHandler={addMovie} movieRef={newMovie} />
+      <MovieForm
+        submitHandler={addMovie}
+        movie={newMovie}
+        setNewMovie={setNewMovie}
+      />
     </div>
   );
 }
