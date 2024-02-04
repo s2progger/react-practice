@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import { API } from "../services/api";
 import MovieForm from "../components/MovieForm";
 
@@ -7,7 +7,8 @@ export default function Movies() {
   const [dependencies, setDependencies] = useState(0);
   const [newMovie, setNewMovie] = useState({ Title: "", Rating: "" });
 
-  // useMemo allows us to cache the movie list between re-renders
+  // useMemo allows us to cache the movie list between re-renders, but we really don't need to do this
+  // as we aren't doing any heavy calculations. I'm just using it to demonstrate how to use it.
   const fetchMovies = useMemo(
     () => async () => {
       API.get("/movies").then((data) => {
@@ -21,12 +22,8 @@ export default function Movies() {
         setMovies(movies);
       });
     },
-    [dependencies]
+    [dependencies],
   );
-
-  useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
 
   const addMovie = (e) => {
     e.preventDefault();
@@ -39,6 +36,10 @@ export default function Movies() {
     });
   };
 
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
+
   return (
     <div>
       <h1>Movies</h1>
@@ -48,17 +49,12 @@ export default function Movies() {
       <ul>
         {movies.map((movie) => (
           <li key={movie.MovieID}>
-            {movie.Title} - {parseFloat(movie.Rating).toFixed(1)} -{" "}
-            {movie.Genre.map((item) => item.genre).join(", ")}
+            {movie.Title} - {parseFloat(movie.Rating).toFixed(1)} - {movie.Genre.map((item) => item.genre).join(", ")}
           </li>
         ))}
       </ul>
 
-      <MovieForm
-        submitHandler={addMovie}
-        movie={newMovie}
-        setNewMovie={setNewMovie}
-      />
+      <MovieForm submitHandler={addMovie} movie={newMovie} setNewMovie={setNewMovie} />
     </div>
   );
 }
