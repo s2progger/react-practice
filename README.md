@@ -1,4 +1,4 @@
-# Method Dev Prep
+# React / Express Basic Practice
 
 ## Learning Objectives
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useContext } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { API } from "../services/api";
 import MovieForm from "../components/MovieForm";
 
