@@ -1,0 +1,6 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+# We probably shouldn't commit the sqlite database, but we definately don't want the journal file
+*.sqlite-journal

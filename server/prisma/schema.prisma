@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Earnings {
+  ID        Int     @id @default(autoincrement())
+  MovieID   Int?
+  Domestic  Int?
+  Worldwide Float?
+  Movies    Movies? @relation(fields: [MovieID], references: [MovieID], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Genre {
+  ID      Int     @id @default(autoincrement())
+  MovieID Int?
+  genre   String?
+  Movies  Movies? @relation(fields: [MovieID], references: [MovieID], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Movies {
+  MovieID      Int        @id @default(autoincrement())
+  Title        String?
+  Rating       Decimal?
+  TotalVotes   Int?
+  MetaCritic   Decimal?
+  Budget       Float?
+  Runtime      String?
+  CVotes10     String?
+  CVotes09     String?
+  CVotes08     String?
+  CVotes07     String?
+  CVotes06     String?
+  CVotes05     String?
+  CVotes04     String?
+  CVotes03     String?
+  CVotes02     String?
+  CVotes01     String?
+  CVotesMale   String?
+  CVotesFemale String?
+  CVotesU18    String?
+  CVotesU18M   String?
+  CVotesU18F   String?
+  CVotes1829   String?
+  CVotes1829M  String?
+  CVotes1829F  String?
+  CVotes3044   String?
+  CVotes3044M  String?
+  CVotes3044F  String?
+  CVotes45A    String?
+  CVotes45AM   String?
+  CVotes45AF   String?
+  CVotes1000   String?
+  CVotesUS     String?
+  CVotesnUS    String?
+  VotesM       String?
+  VotesF       String?
+  VotesU18     String?
+  VotesU18M    String?
+  VotesU18F    String?
+  Votes1829    String?
+  Votes1829M   String?
+  Votes1829F   String?
+  Votes3044    String?
+  Votes3044M   String?
+  Votes3044F   String?
+  Votes45A     String?
+  Votes45AM    String?
+  Votes45AF    String?
+  VotesIMDB    String?
+  Votes1000    String?
+  VotesUS      String?
+  VotesnUS     String?
+  Earnings     Earnings[]
+  Genre        Genre[]
+}
